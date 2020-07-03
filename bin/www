@@ -43,13 +43,10 @@ server.on("listening", onListening);
  */
 wss.on("connection", (ws) => {
   ws.on("message", (filePath) => {
-    console.log("josh is within message")
     fs.watch(filePath, () => {
-      console.log("josh is within watch")
       fs.createReadStream(filePath).on("data", chunk => {
         let logsArr = chunk.toString().split('\n')
         let logsStr = logsArr.reverse().join('\n')
-        console.log("josh is within createReadStream")
         ws.send(logsStr)
       })
     })
